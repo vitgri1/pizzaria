@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -32,13 +33,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        dump($request);
         $order = new Order;
-        $order->title = $request->title;
-        $order->about = $request->about;
-        $order->price = (double) $request->price;
+        $order->base = $request->base;
+        $order->toppings = array_keys($request->toppings);
+        $order->name = $request->name;
         $order->save();
-        $order->genres()->attach($request->allGenres);
-
+        return view('test');
     }
 
     /**

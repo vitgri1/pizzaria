@@ -1,13 +1,12 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/CustomLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue'
 
 defineProps({
   pizza_sizes: Object,
   pizza_toppings: Object,
   storeUrl: String,
-  someText: String
 });
 
 const base = ref(0);
@@ -26,6 +25,16 @@ function addTopping (topping, toppings, pizza_toppings) {
 function deleteTopping (pizza_toppings, event) {
     pizza_toppings[event.target.dataset.topId] = event.target.dataset.top;
     delete toppings.value[event.target.dataset.topId];
+}
+
+function makeOrder (storeUrl) {
+    router.post(storeUrl, 
+    {
+        toppings: toppings.value,
+        base: base.value,
+        name: 'jonas'
+    },
+    )
 }
 
 </script>
@@ -79,6 +88,14 @@ function deleteTopping (pizza_toppings, event) {
                             </li>
                         </ul>
                         <p>Esitamted cost of the order: {{ base + Object.keys(toppings).length }}€</p>
+                    </div>
+                    <div class="p-6">
+                        <button 
+                        class="float-right"
+                        @click="makeOrder(storeUrl)"
+                        >
+                            Make order
+                        </button>
                     </div>
                 </div>
             </div>
