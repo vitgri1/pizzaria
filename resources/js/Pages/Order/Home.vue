@@ -78,7 +78,7 @@ function deleteTopping (pizza_toppings, event) {
                                 >x</button>
                             </li>
                         </ul>
-                        <p>Esitamted cost of the order: {{ base + toppings.length }}€</p>
+                        <p>Esitamted cost of the order: {{ base + Object.keys(toppings).length }}€</p>
                     </div>
                 </div>
             </div>
