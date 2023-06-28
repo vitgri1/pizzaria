@@ -19,7 +19,7 @@ class OrderController extends Controller
             '6' => 'pepreroni'
         ]; //ids and names of toppings
 
-        return Inertia::render('Order/Create', [
+        return Inertia::render('Order/Home', [
             'storeUrl' => route('order.store'),
             'pizza_sizes' => $pizza_sizes,
             'pizza_toppings' => $pizza_toppings

@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('order')->name('order.')->group(function () {
-    Route::get('/create', [O::class, 'create'])->name('create');
+    Route::get('/', [O::class, 'create'])->name('create');
     Route::post('/', [O::class, 'store'])->name('store');
     Route::get('/edit/{order}', [O::class, 'edit'])->name('edit');
     Route::put('/edit/{order}', [O::class, 'update'])->name('update');
