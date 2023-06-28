@@ -12,12 +12,20 @@ defineProps({
 
 const base = ref(0);
 const topping = ref(0);
-const toppings = ref([]);
+const toppings = ref({});
 
-function deleteTopping (event) {
-    const topIdInList = toppings.value.indexOf(event.target.dataset.topId);
-    delete toppings.value[topIdInList];
-    event.target.parentNode.remove();
+function addTopping (topping, toppings, pizza_toppings) {
+    console.log(topping);
+    if (topping != 0) {
+        toppings[topping] = pizza_toppings[topping];
+        delete pizza_toppings[topping];
+    }
+    return 0;
+}
+
+function deleteTopping (pizza_toppings, event) {
+    pizza_toppings[event.target.dataset.topId] = event.target.dataset.top;
+    delete toppings.value[event.target.dataset.topId];
 }
 
 </script>
@@ -34,6 +42,7 @@ function deleteTopping (event) {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-visible shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
+                    
                         <label for="base-select">Select the size of pizza base</label>
                         <select v-model="base" id="base-select">
                         <option v-for="(value, key) in pizza_sizes" :key="value" :value="value">
@@ -50,23 +59,21 @@ function deleteTopping (event) {
                             </select>
 
                             <button
-                            @click="
-                            topping > 0 && !toppings.includes(topping) ? toppings.push(topping): null; 
-                            topping = 0;
-                            "
+                            @click="topping = addTopping(topping, toppings, pizza_toppings)"
                             class="border rounded border-solid border-black bg-slate-200"
                             >
                                 Add an additional topping
                             </button>
                         </div>
 
-                        <p v-if="toppings.length > 0">Added toppings:</p>
-                        <ul v-if="toppings.length > 0">
-                            <li v-for="top in toppings">
-                                <p>{{ pizza_toppings[top] }}</p>
+                        <p v-if="Object.keys(toppings).length > 0">Added toppings:</p>
+                        <ul v-if="Object.keys(toppings).length > 0">
+                            <li v-for="(top, topId) in toppings">
+                                <p>{{ top }}</p>
                                 <button
-                                :data-top-id="top"
-                                @click="deleteTopping"
+                                :data-top="top"
+                                :data-top-id="topId"
+                                @click="deleteTopping(pizza_toppings, $event)"
                                 class="border rounded border-solid border-black bg-slate-200 px-0.5"
                                 >x</button>
                             </li>
