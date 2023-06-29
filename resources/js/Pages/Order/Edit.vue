@@ -6,7 +6,7 @@ import { ref, onBeforeMount} from 'vue'
 const props = defineProps({
   pizza_sizes: Object,
   pizza_toppings: Object,
-  updateUrl: String,
+  urls: Object,
   order: Object
 });
 
@@ -29,14 +29,18 @@ function deleteTopping (pizza_toppings, event) {
     delete toppings.value[event.target.dataset.topId];
 }
 
-function makeOrder (storeUrl) {
-    router.put(storeUrl, 
+function makeOrder (updateUrl) {
+    router.put(updateUrl, 
     {
         toppings: toppings.value,
         base: base.value,
         name: 'jonas'
     },
     )
+}
+
+function destroyOrder (destroyUrl) {
+    router.delete(destroyUrl)
 }
 
 </script>
@@ -94,9 +98,15 @@ function makeOrder (storeUrl) {
                     <div class="p-6">
                         <button 
                         class="float-right"
-                        @click="makeOrder(updateUrl)"
+                        @click="makeOrder(urls.updateUrl)"
                         >
                             Make order
+                        </button>
+                        <button 
+                        class="float-right"
+                        @click="destroyOrder(urls.destroyUrl)"
+                        >
+                            Delete order
                         </button>
                     </div>
                 </div>

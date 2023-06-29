@@ -72,8 +72,13 @@ class OrderController extends Controller
         $order->toppings = $tempTops;
         unset($tempTops);
 
-        return Inertia::render('Order/Edit', [
+        $urls = [
             'updateUrl' => route('order.update', $order),
+            'destroyUrl' => route('order.destroy', $order)
+        ];
+
+        return Inertia::render('Order/Edit', [
+            'urls' => $urls,
             'pizza_sizes' => $pizza_sizes,
             'pizza_toppings' => $pizza_toppings,
             'order' => $order
@@ -98,6 +103,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('dashboard');
     }
 }
