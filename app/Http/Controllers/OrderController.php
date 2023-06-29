@@ -52,7 +52,8 @@ class OrderController extends Controller
         $order->toppings = array_keys($request->toppings);
         $order->name = $request->name;
         $order->save();
-        return view('test'); //change this
+        
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -88,8 +89,8 @@ class OrderController extends Controller
         $order->toppings = array_keys($request->toppings);
         $order->name = $request->name;
         $order->save();
-        
-        return view('test'); //change this
+
+        return redirect()->route('dashboard');
     }
 
     /**
