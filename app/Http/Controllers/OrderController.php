@@ -60,7 +60,23 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $pizza_sizes = Order::BASES;
+        $pizza_toppings = Order::TOPPINGS;
+
+        foreach($order->toppings as $top)
+        {
+            $tempTops[$top] = $pizza_toppings[$top];
+            unset($pizza_toppings[$top]);
+        }
+        $order->toppings = $tempTops;
+        unset($tempTops);
+
+        return Inertia::render('Order/Edit', [
+            'updateUrl' => route('order.update', $order),
+            'pizza_sizes' => $pizza_sizes,
+            'pizza_toppings' => $pizza_toppings,
+            'order' => $order
+        ]);
     }
 
     /**
@@ -68,7 +84,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $order->base = $request->base;
+        $order->toppings = array_keys($request->toppings);
+        $order->name = $request->name;
+        $order->save();
+        
+        return view('test'); //change this
     }
 
     /**
