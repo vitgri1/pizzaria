@@ -14,4 +14,19 @@ class Order extends Model
     protected $casts = [
         'toppings' => 'array',
     ];
+
+    const BASES = [
+        'small' => 8, 
+        'medium' => 10, 
+        'large' => 12
+    ];
+
+    const TOPPINGS = [
+        '1' => 'cheese',
+        '2' => 'red peper',
+        '3' => 'mushrooms',
+        '4' => 'chicken',
+        '5' => 'ham',
+        '6' => 'pepreroni'
+    ];
 }

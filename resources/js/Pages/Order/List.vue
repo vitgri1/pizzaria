@@ -1,17 +1,12 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/CustomLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue'
 
 defineProps({
   orders: Object,
   pizza_sizes: Object,
   pizza_toppings: Object,
-  storeUrl: String,
 });
-
-// const base = ref(0);
-
 </script>
 
 <template>
@@ -26,12 +21,19 @@ defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-visible shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                    
-                        <ul >
+                        <ul>
+                            <li class="flex divide-x justify-between py-3 font-bold border-y-4">
+                                <div>ID</div>
+                                <div>name</div>
+                                <div>size</div>
+                                <div>toppings</div>
+                                <div>total</div>
+                                <div>discounted</div>
+                            </li>   
                             <li v-if="orders" v-for="order in orders" class="flex divide-x justify-between">
-                                <div>
+                                <a :href="order.editRoute">
                                     {{ order.id }}
-                                </div>
+                                </a>
                                 <div>
                                     {{ order.name }}
                                 </div>
@@ -40,20 +42,26 @@ defineProps({
                                         {{key}}
                                     </div>
                                 </template>
-                                <template v-for="(top, top_key) in pizza_toppings">
+                                <div class="flex flex-col divide-y justify-between">
+                                    <template v-for="(top, top_key) in pizza_toppings">
                                     <template v-for="ord in order.toppings">
                                         <div v-if="ord == top_key">
                                             {{ top }}
                                         </div>
                                     </template>
-                                </template>
-                                
+                                    </template>
+                                </div>
+                                <div>
+                                    {{ order.total }}€
+                                </div>
+                                <div>
+                                    {{ order.discounted? '10% discount' : "no discount" }}
+                                </div>
                             </li>
                             <li v-else>
                                 You have no orders yet, go order!
                             </li>
                         </ul>
-
                     </div>
                 </div>
             </div>

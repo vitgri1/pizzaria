@@ -10,37 +10,30 @@ class OrderController extends Controller
 {
     public function index()
     {
+        $pizza_sizes = Order::BASES;
+        $pizza_toppings = Order::TOPPINGS;
         $orders = Order::get();
-        $pizza_sizes = ['small' => 8, 'medium' => 10, 'large' => 12];
-        $pizza_toppings = [
-            '1' => 'cheese',
-            '2' => 'red peper',
-            '3' => 'mushrooms',
-            '4' => 'chicken',
-            '5' => 'ham',
-            '6' => 'pepreroni'
-        ]; //ids and names of toppings
+        
+        foreach ($orders as $ord) {
+            $ord->editRoute = route('order.edit', $ord->id);
+            $ord->total = $ord->base + count($ord->toppings);
+            if (count($ord->toppings) > 3 ) {
+                $ord->total = $ord->total*0.9;
+                $ord->discounted = true;
+            }
+        }
 
         return Inertia::render('Order/List', [
-            // 'storeUrl' => route('order.store'),
             'pizza_sizes' => $pizza_sizes,
             'pizza_toppings' => $pizza_toppings,
-            'orders' => $orders
+            'orders' => $orders,
         ]);
     }
 
     public function create()
     {
-        $pizza_sizes = ['small' => 8, 'medium' => 10, 'large' => 12];
-
-        $pizza_toppings = [
-            '1' => 'cheese',
-            '2' => 'red peper',
-            '3' => 'mushrooms',
-            '4' => 'chicken',
-            '5' => 'ham',
-            '6' => 'pepreroni'
-        ]; //ids and names of toppings
+        $pizza_sizes = Order::BASES;
+        $pizza_toppings = Order::TOPPINGS;
 
         return Inertia::render('Order/Home', [
             'storeUrl' => route('order.store'),
@@ -54,21 +47,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dump($request);
         $order = new Order;
         $order->base = $request->base;
         $order->toppings = array_keys($request->toppings);
         $order->name = $request->name;
         $order->save();
-        return view('test');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
-    {
-        //
+        return view('test'); //change this
     }
 
     /**
