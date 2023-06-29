@@ -8,6 +8,27 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Order::get();
+        $pizza_sizes = ['small' => 8, 'medium' => 10, 'large' => 12];
+        $pizza_toppings = [
+            '1' => 'cheese',
+            '2' => 'red peper',
+            '3' => 'mushrooms',
+            '4' => 'chicken',
+            '5' => 'ham',
+            '6' => 'pepreroni'
+        ]; //ids and names of toppings
+
+        return Inertia::render('Order/List', [
+            // 'storeUrl' => route('order.store'),
+            'pizza_sizes' => $pizza_sizes,
+            'pizza_toppings' => $pizza_toppings,
+            'orders' => $orders
+        ]);
+    }
+
     public function create()
     {
         $pizza_sizes = ['small' => 8, 'medium' => 10, 'large' => 12];
