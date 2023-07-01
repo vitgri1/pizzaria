@@ -22,11 +22,27 @@ class Order extends Model
     ];
 
     const TOPPINGS = [
-        '1' => 'cheese',
-        '2' => 'red peper',
-        '3' => 'mushrooms',
-        '4' => 'chicken',
-        '5' => 'ham',
-        '6' => 'pepreroni'
+        1 => 'cheese',
+        2 => 'red peper',
+        3 => 'mushrooms',
+        4 => 'chicken',
+        5 => 'ham',
+        6 => 'pepreroni',
+        7 => 'bacon',
+        8 => 'onion',
+        9 => 'capsicum',
+        10 => 'olives',
+        11 => 'pineapple',
+        12 => 'BBQ sauce',
+        13 => 'beef',
+        14 => 'mince',
+        15 => 'chilli',
+        16 => 'kale',
+        17 => 'prosciutto',
+        18 => 'extra cheese',
+        19 => 'pesto sauce',
+        20 => 'salami',
+        21 => 'anchovies',
+        22 => 'spinach'
     ];
 }
