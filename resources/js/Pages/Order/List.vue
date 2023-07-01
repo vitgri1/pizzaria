@@ -22,27 +22,27 @@ defineProps({
                 <div class="bg-white overflow-visible shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <ul>
-                            <li class="flex divide-x justify-between py-3 font-bold border-y-4">
+                            <li class="grid grid-cols-10 divide-x justify-between py-3 font-bold border-y-4">
                                 <div>ID</div>
-                                <div>name</div>
-                                <div>size</div>
-                                <div>toppings</div>
-                                <div>total</div>
-                                <div>discounted</div>
+                                <div class="col-span-2">Name</div>
+                                <div class="col-span-2">Size</div>
+                                <div class="col-span-2">Toppings</div>
+                                <div>Total</div>
+                                <div class="col-span-2">Applied discount</div>
                             </li>   
-                            <li v-if="orders" v-for="order in orders" class="flex divide-x justify-between">
+                            <li v-if="orders" v-for="order in orders" class="grid grid-cols-10 divide-x justify-between border-b-2 capitalize">
                                 <a :href="order.editRoute">
                                     {{ order.id }}
                                 </a>
-                                <div>
+                                <div class="col-span-2">
                                     {{ order.name }}
                                 </div>
                                 <template v-for="(value, key) in pizza_sizes">
-                                    <div v-if="order.base == value">
+                                    <div v-if="order.base == value" class="col-span-2">
                                         {{key}}
                                     </div>
                                 </template>
-                                <div class="flex flex-col divide-y justify-between">
+                                <div class="flex flex-col divide-y justify-between col-span-2">
                                     <template v-for="(top, top_key) in pizza_toppings">
                                     <template v-for="ord in order.toppings">
                                         <div v-if="ord == top_key">
@@ -54,8 +54,8 @@ defineProps({
                                 <div>
                                     {{ order.total }}€
                                 </div>
-                                <div>
-                                    {{ order.discounted? '10% discount' : "no discount" }}
+                                <div class="col-span-2">
+                                    {{ order.discounted? '10% off' : "none" }}
                                 </div>
                             </li>
                             <li v-else>
