@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -47,6 +48,19 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'base' => 'required | integer | min:1',
+            'toppings' => 'required | array',
+            'name' => 'required | string',
+        ]);
+ 
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()
+                ->back()
+                ->withErrors($validator);
+        }
+
         $order = new Order;
         $order->base = $request->base;
         $order->toppings = array_keys($request->toppings);
@@ -90,6 +104,19 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $validator = Validator::make($request->all(), [
+            'base' => 'required | integer | min:1',
+            'toppings' => 'required | array',
+            'name' => 'required | string',
+        ]);
+ 
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()
+                ->back()
+                ->withErrors($validator);
+        }
+
         $order->base = $request->base;
         $order->toppings = array_keys($request->toppings);
         $order->name = $request->name;
